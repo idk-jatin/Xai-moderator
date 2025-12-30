@@ -1,0 +1,16 @@
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+venv/
+*.pt
+*.pth
+*.ckpt
+*.bin
+*.safetensors
+logs/
+wandb/
+.cache/
+.ipynb_checkpoints/
+.DS_Store
+Thumbs.db
