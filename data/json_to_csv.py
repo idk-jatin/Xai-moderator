@@ -50,6 +50,6 @@ def to_csv(split, path):
 
 if __name__ == "__main__":
     dataset = load_hatexplain()
-    to_csv(dataset["train"], "data/processed/train.csv")
-    to_csv(dataset["validation"], "data/processed/val.csv")
-    to_csv(dataset["test"], "data/processed/test.csv")
+    to_csv(dataset["train"], "data/raw/train.csv")
+    to_csv(dataset["validation"], "data/raw/val.csv")
+    to_csv(dataset["test"], "data/raw/test.csv")
