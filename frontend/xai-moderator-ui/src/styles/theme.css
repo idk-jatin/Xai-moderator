@@ -1,0 +1,47 @@
+:root {
+  --bg: #000000;
+  --panel: #080808;
+  --text: #e5e7eb;
+  --muted: #9ca3af;
+  --accent: #22d3ee;
+  --hate: #ef4444;
+  --offensive: #f59e0b;
+  --normal: #22c55e;
+    --hatespeech: #ef4444;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+.card {
+  background: var(--panel);
+  padding: 20px;
+}
+
+button {
+  background: rgb(46, 241, 46);
+  border: none;
+  color: black;
+  font-weight: 600;
+  padding: 10px 18px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+textarea {
+  background: #000000;
+  border: 1px solid #1f2933;
+  border-radius: 5px;
+  color: rgb(46, 241, 46);
+  padding: 14px;
+  font-size: 15px;
+  outline: none;
+}
+
+textarea:focus {
+  border-color: var(--accent);
+}
