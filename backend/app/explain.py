@@ -1,39 +1,47 @@
 import numpy as np
-from .model import tokenizer
+from transformers import AutoTokenizer
+from pathlib import Path
 
-SPECIAL = {"[CLS]", "[SEP]", "[PAD]"}
+base_dir = Path(__file__).resolve().parents[2]
+model_path = str(base_dir / "models" / "distilbert" / "final_model")
 
-def word_level_attention(attentions, input_ids, original_text):
+tokenizer = AutoTokenizer.from_pretrained(model_path)
+
+special = {"[CLS]", "[SEP]", "[PAD]"}
+
+
+def word_attention(attentions, input_ids, text):
+
     attn = attentions[-1].mean(dim=1)[0]
     cls_attn = attn[0].cpu().numpy()
 
-    tokens = tokenizer.convert_ids_to_tokens(input_ids)
-    words = original_text.split()
+    tokens = tokenizer.convert_ids_to_tokens(input_ids.tolist())
+    words = [w.strip(".,!?;:()[]{}\"'").lower() for w in text.split()]
+
+    special = {"[CLS]", "[SEP]", "[PAD]"}
 
     word_scores = []
     clean_words = []
 
-    current_word = ""
-    current_scores = []
-
+    curr = ""
+    curr_scores = []
     word_idx = 0
 
     for tok, score in zip(tokens, cls_attn):
-        if tok in SPECIAL:
+        if tok in special:
             continue
 
         tok = tok.replace("##", "")
-        current_word += tok
-        current_scores.append(score)
+        curr += tok
+        curr_scores.append(score)
 
-        if word_idx < len(words) and current_word.lower() == words[word_idx].lower():
+        if word_idx < len(words) and curr.lower() == words[word_idx]:
             clean_words.append(words[word_idx])
-            word_scores.append(float(np.mean(current_scores)))
-            current_word = ""
-            current_scores = []
+            word_scores.append(float(np.mean(curr_scores)))
+            curr = ""
+            curr_scores = []
             word_idx += 1
 
-    # normalize
     if len(word_scores) > 0:
         mx = max(word_scores)
         word_scores = [s / mx for s in word_scores]

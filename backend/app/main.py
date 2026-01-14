@@ -2,17 +2,11 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
 
-from .inference import predict
-from .explain import word_level_attention
+from app.controller import analyze_all
 
-
-app = FastAPI(title="Xai Moderator API")
-
+app = FastAPI(title="XAI Moderator API")
 app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_methods=["*"],
-    allow_headers=["*"]
+    CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"]
 )
 
 class TextRequest(BaseModel):
@@ -20,22 +14,8 @@ class TextRequest(BaseModel):
 
 @app.get("/")
 def health():
-    return {"status": "Xai Moderator running"}
+    return {"status": "XAI Moderator running"}
 
 @app.post("/analyze")
 def analyze(req: TextRequest):
-    result = predict(req.text)
-
-    words, scores = word_level_attention(
-        result["attentions"],
-        result["input_ids"],
-        req.text
-    )
-
-    return {
-        "label": result["label"],
-        "probabilities": result["probabilities"],
-        "words": words,
-        "attention": scores
-    }
-
+    return analyze_all(req.text)
