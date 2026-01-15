@@ -65,7 +65,7 @@ export default function Dashboard() {
       />
       {loading && (
         <>
-          <h3 style={{ marginTop: 20 }}>{""}</h3>
+          <h3 style={{ marginTop: 220 }}>{""}</h3>
           <PipelineFlow stage={stage} />
         </>
       )}
