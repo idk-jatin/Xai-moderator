@@ -6,7 +6,7 @@ from app.controller import analyze_all
 
 app = FastAPI(title="XAI Moderator API")
 app.add_middleware(
-    CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"]
+    CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"], allow_credentials=True
 )
 
 class TextRequest(BaseModel):

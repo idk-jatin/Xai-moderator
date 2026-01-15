@@ -1,9 +1,8 @@
-export async function analyzeText(text) {
-  const res = await fetch("http://127.0.0.1:8000/analyze", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ text })
-  });
+import axios from 'axios'
 
-  return await res.json();
+const BASE_URL = import.meta.env.VITE_BACKEND_URL;
+
+export async function get_inference(text){
+const res  = await axios.post(`${BASE_URL}/analyze`,{text:text});
+return res.data;
 }

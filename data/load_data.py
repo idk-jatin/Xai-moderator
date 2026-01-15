@@ -6,5 +6,5 @@ def load_hatexplain():
 
 if __name__ == "__main__":
     ds = load_hatexplain()
-    print(ds)
+    print(ds)   
     print(ds["train"][824])

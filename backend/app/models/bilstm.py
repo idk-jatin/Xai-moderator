@@ -55,13 +55,9 @@ def encode(text: str):
 
 def predict_bi(text: str):
     ids = encode(text)
-    print("TOKENS:", text.lower().split())
-    print("IDS:", ids[:20])
     x = torch.tensor(ids).unsqueeze(0).to(device)
     with torch.no_grad():
         logits = model(x)
-    print("LOGITS:", logits.cpu().numpy())
-    print("LAST 10 IDS:", ids[-10:])
     probs = F.softmax(logits/2.0, dim=1)[0].cpu().numpy()
     pred_id = int(torch.argmax(logits, dim=1))
 
